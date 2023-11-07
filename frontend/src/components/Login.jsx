@@ -4,11 +4,9 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { login } from '../services/LoginApi';
 import {useBasket} from '../context/BasketContext';
-import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const { setToken } = useBasket();
-    const navigate = useNavigate(); // Initialize useHistory
     const [showForm, setShowForm] = useState(true);
     const [formData, setFormData] = useState({
       email: '',
@@ -27,12 +25,18 @@ function Login() {
           const response = await login(formData.email, formData.password);
           setToken(response.token);
           setShowForm(false);
-          navigate('/admin');
         } catch (error) {
-          // Handle login error, e.g., display an error message
           console.error('Login error', error);
         }
       };
+
+    if (!showForm) {
+      return (
+        <Container>
+          <p>You are now logged in!</p>
+        </Container>
+      );
+    }
 
     return (
         <Container>

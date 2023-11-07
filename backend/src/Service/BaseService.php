@@ -13,7 +13,7 @@ class BaseService
 
     public function __construct()
     {
-        $this->path = $_SERVER['REQUEST_URI']; // PATH_INFO
+        $this->path = $_SERVER['REQUEST_URI'];
         $modelName = explode('/', $this->path)[1];
         $modelNamespace = 'App\Model\\';
         $modelName = ucfirst($modelName);

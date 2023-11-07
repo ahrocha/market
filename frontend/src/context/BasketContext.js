@@ -3,6 +3,7 @@ import React, { createContext, useContext, useReducer } from 'react';
 // Initial state for the context
 const initialState = {
   basketItems: [],
+  token: null,
 };
 
 // Define the context
@@ -13,6 +14,8 @@ const basketReducer = (state, action) => {
   switch (action.type) {
     case 'UPDATE_BASKET':
       return { basketItems: action.payload };
+    case 'UPDATE_TOKEN':
+      return { token: action.payload };
     default:
       return state;
   }
@@ -35,7 +38,7 @@ export const BasketProvider = ({ children }) => {
 
   const getTotalPrice = () => {
     let total = 0;
-    state.basketItems.forEach((item) => {
+    state.basketItems?.forEach((item) => {
       total += item.price * item.quantity;
     });
     return total;
@@ -43,14 +46,11 @@ export const BasketProvider = ({ children }) => {
 
   const setToken = (token) => {
     localStorage.setItem('token', token);
-  }
-
-  const getToken = () => {
-    return localStorage.getItem('token');
+    dispatch({ type: 'UPDATE_TOKEN', payload: token });
   }
 
   return (
-    <BasketContext.Provider value={{ basketItems: state.basketItems, updateBasket, clearBasket, getTotalPrice, setToken, getToken }}>
+    <BasketContext.Provider value={{ basketItems: state.basketItems, updateBasket, clearBasket, getTotalPrice, setToken, token: state.token }}>
       {children}
     </BasketContext.Provider>
   );

@@ -13,9 +13,11 @@ import {formatPercentage, formatPrice} from '../utils/ContentFormat';
 function TableItems({products, types}) {
 
     const getProductType = (type_id) => {
-        if (!types.length) return;
+        if (!types) return;
         return types.find((type) => type.id === type_id);
       };
+
+    if (!products) return (<p>No items in basket</p>);
 
     return (
         <TableContainer component={Paper}>

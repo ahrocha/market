@@ -12,11 +12,15 @@ function Product({product, type}) {
   const { basketItems, updateBasket } = useBasket();
 
   const addToBasketHandler = () => {
-    const itemInList = basketItems.find((i) => i.id === product.id);
+    const itemInList = basketItems?.find((i) => i.id === product.id);
     if (itemInList) {
       itemInList.quantity += 1;
     } else {
-        basketItems.push({ ...product, quantity: 1 });
+      let newBasketItems = [];
+      if (basketItems !== undefined) {
+        newBasketItems = basketItems;
+      }
+      newBasketItems?.push({ ...product, quantity: 1 });
     }
     updateBasket(basketItems);
   }

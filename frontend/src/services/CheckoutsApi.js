@@ -4,7 +4,6 @@ const BASE_ENDPOINT = '/checkouts/';
 
 const CheckoutsApi = {
 
-    // Create a new checkout
     createCheckout: async (checkoutData) => {
         try {
           const response = await axios.post(BASE_ENDPOINT, checkoutData);
@@ -14,17 +13,16 @@ const CheckoutsApi = {
         }
     },
     
-    // Get a list of checkouts
     getCheckouts: async () => {
         try {
-            const response = await axios.get(BASE_ENDPOINT);
+            const options = {"Authorization": `Token ${localStorage.getItem('token')}`};
+            const response = await axios.get(BASE_ENDPOINT, {headers: options});
             return response.data;
         } catch (error) {
             throw error;
         }
     },
     
-    // Get a specific checkout by ID
     getCheckoutById: async (checkoutId) => {
         try {
         const response = await axios.get(`${BASE_ENDPOINT}${checkoutId}`);
@@ -34,7 +32,6 @@ const CheckoutsApi = {
         }
     },
     
-    // Update an existing checkout
     updateCheckout: async (checkoutId, checkoutData) => {
         try {
         const response = await axios.put(`${BASE_ENDPOINT}${checkoutId}`, checkoutData);
@@ -44,11 +41,11 @@ const CheckoutsApi = {
         }
     },
     
-    // Delete a checkout by ID
     deleteCheckout: async (checkoutId) => {
         try {
-        const response = await axios.delete(`${BASE_ENDPOINT}${checkoutId}`);
-        return response.data;
+            const options = {"Authorization": `Token ${localStorage.getItem('token')}`};
+            const response = await axios.delete(`${BASE_ENDPOINT}${checkoutId}`, {headers: options});
+            return response.data;
         } catch (error) {
         throw error;
         }

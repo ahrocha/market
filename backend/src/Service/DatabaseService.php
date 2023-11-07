@@ -10,14 +10,13 @@ class DatabaseService
 
     public function __construct()
     {
-        # create DB connection using pdo postgresql
+        # @TODO optimize to use only one instance of PDO
         $db = new \PDO(
             'pgsql:host='.getenv('POSTGRES_HOST').';dbname='.getenv('POSTGRES_DB'),
             getenv('POSTGRES_USER'),
             getenv('POSTGRES_PASSWORD'));
         $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $db->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-        # connect DB
         $this->db = $db;
     }
 

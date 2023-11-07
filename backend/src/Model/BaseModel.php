@@ -35,7 +35,6 @@ class BaseModel
 
     public function update()
     {
-        echo 'TypesService::update()';
         print_r($this);
     }
 

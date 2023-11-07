@@ -12,7 +12,7 @@ WORKDIR /var/www/html
 COPY . /var/www/html
 
 # Expose the port that your PHP application is listening on
-EXPOSE 80
+EXPOSE 8000
 
 # Command to start your PHP application
-CMD ["php", "-S", "0.0.0.0:80", "public/index.php"]
+CMD ["php", "-S", "0.0.0.0:8000", "public/index.php"]

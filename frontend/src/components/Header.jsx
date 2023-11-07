@@ -9,7 +9,8 @@ import TotalPrice from "./Basket/TotalPrice";
 import { useBasket } from '../context/BasketContext';
 
 function Header() {
-    const { getTotalPrice } = useBasket();
+    const { token, getTotalPrice } = useBasket();
+
     return (
     <header className="App-header">
         <h1>Menu</h1>
@@ -27,9 +28,16 @@ function Header() {
         <Button component={Link} to="/checkout" color="inherit" disabled={getTotalPrice() < 1}>
             Go to checkout
         </Button>
-        <Button component={Link} to="/login" color="inherit">
-            Login
-        </Button>
+        {token && (
+          <Button component={Link} to="/admin" color="inherit">
+            Admin
+          </Button>
+        )}
+        {!token && (
+          <Button component={Link} to="/login" color="inherit">
+          Login
+          </Button>
+        )}
       </Toolbar>
     </AppBar>
     </header>
