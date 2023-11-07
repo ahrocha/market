@@ -32,14 +32,9 @@ class BaseController
 
     public function dispatch()
     {
-
         if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-            header('Access-Control-Allow-Origin: *');
-            header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-            header('Access-Control-Allow-Headers: Content-Type, Authorization');
-            header('Access-Control-Expose-Headers: Authorization');
-            header('Access-Control-Max-Age: 86400');
             echo '';
+            return;
         } elseif (($this->requestUri === '/'.$this->serviceName || $this->requestUri === '/'.$this->serviceName.'/') && $_SERVER['REQUEST_METHOD'] === 'GET') {
             $this->list();
         } elseif ($this->requestUri === $this->path && $_SERVER['REQUEST_METHOD'] === 'POST') {
