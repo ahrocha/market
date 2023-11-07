@@ -1,31 +1,26 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
-// Initial state for the context
 const initialState = {
   basketItems: [],
   token: null,
 };
 
-// Define the context
 const BasketContext = createContext();
 
-// Define a reducer function to manage state updates
 const basketReducer = (state, action) => {
   switch (action.type) {
     case 'UPDATE_BASKET':
-      return { basketItems: action.payload };
+      return { ...state, basketItems: action.payload };
     case 'UPDATE_TOKEN':
-      return { token: action.payload };
+      return { ...state, token: action.payload };
     default:
       return state;
   }
 };
 
-// Create a provider component
 export const BasketProvider = ({ children }) => {
   const [state, dispatch] = useReducer(basketReducer, initialState);
 
-  // Function to update the basket in localStorage and notify components
   const updateBasket = (newBasket) => {
     localStorage.setItem('list', JSON.stringify(newBasket));
     dispatch({ type: 'UPDATE_BASKET', payload: newBasket });
@@ -56,7 +51,6 @@ export const BasketProvider = ({ children }) => {
   );
 };
 
-// Custom hook to access the context
 export const useBasket = () => {
   return useContext(BasketContext);
 };

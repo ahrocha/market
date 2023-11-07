@@ -20,7 +20,6 @@ function CheckoutList() {
     const [types, setTypes] = useState([]);
     const fetchCheckouts = async () => {
         const response = await CheckoutsApi.getCheckouts();
-        console.log('response', response);
         setCheckouts(response);
     };
 
@@ -44,7 +43,7 @@ function CheckoutList() {
     if (!checkouts.length || !types.length) {
         return (<div>Loading...</div>)
     };
-    console.log('checkouts', checkouts);
+
     return (
         <Container>
             <h1>CheckoutList</h1>
@@ -64,7 +63,7 @@ function CheckoutList() {
             {checkouts.map((checkout) => (
                 <>
             <TableRow
-              key={checkout.id}
+              key={`checkout-${checkout.id}`}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               style={{ verticalAlign: 'top' }}
             >

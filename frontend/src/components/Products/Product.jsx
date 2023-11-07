@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -46,14 +45,4 @@ function Product({product, type}) {
   );
 }
 
-Product.propTypes = {
-  product: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-  }).isRequired,
-  type: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    tax: PropTypes.number.isRequired,
-  }).isRequired,
-};
 export default Product;

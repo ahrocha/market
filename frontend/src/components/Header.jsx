@@ -5,11 +5,10 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 
-import TotalPrice from "./Basket/TotalPrice";
 import { useBasket } from '../context/BasketContext';
 
 function Header() {
-    const { token, getTotalPrice } = useBasket();
+    const { token, basketItems } = useBasket();
 
     return (
     <header className="App-header">
@@ -23,9 +22,9 @@ function Header() {
           Products
         </Button>
         <Button component={Link} to="/basket" color="inherit">
-          Basket (<TotalPrice />)
+          Basket { basketItems && `(${basketItems.length} items)` }
         </Button>
-        <Button component={Link} to="/checkout" color="inherit" disabled={getTotalPrice() < 1}>
+        <Button component={Link} to="/checkout" color="inherit" disabled={basketItems && basketItems.lenght < 1}>
             Go to checkout
         </Button>
         {token && (
