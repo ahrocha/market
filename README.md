@@ -17,6 +17,7 @@ docker-compose up --build
 
 1) Optimize one instance DB connection
 2) Do more methods (PUT/PATCH)
+3) make responsible
 
 Local:
 backend
