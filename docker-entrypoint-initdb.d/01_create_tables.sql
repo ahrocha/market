@@ -46,7 +46,7 @@ INSERT INTO public.users (email,"password") VALUES
 	 ('admin2@admin.com','$2y$10$m9ov66iNbNgQul7Sy3fJEurjcbr9NCQzkLZauTVaLGrrMTMoKR9om');
 
 
-INSERT INTO public."types" ("name",tax) VALUES
+INSERT INTO public."types" ("type",tax) VALUES
 	 ('drink',0.5000),
 	 ('food',0.0500);
 
