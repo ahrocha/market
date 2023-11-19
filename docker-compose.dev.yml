@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:latest
+    container_name: database_dev
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: market
+      POSTGRES_USER: market
+      POSTGRES_PASSWORD: 12345
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+    env_file:
+      - .env
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:3000"
+    depends_on:
+      - database
+    env_file:
+      - .env
+    volumes:
+      - ./frontend:/app
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
