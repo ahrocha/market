@@ -6,6 +6,6 @@ class ProductsModel extends BaseModel
 {
     public $tableName = 'products';
 
-    public $fields = ['name', 'type', 'price'];
+    public $fields = ['name', 'type', 'price', 'image'];
 
 }

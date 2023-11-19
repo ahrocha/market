@@ -53,7 +53,7 @@ INSERT INTO public."types" ("type",tax) VALUES
 
 INSERT INTO public.products ("name",price,type_id,image) VALUES
 	 ('orange juice',17.00,1, '/assets/images/orange_juice.webp'),
-     ('pizza',44.00,2, '/assets/images/pizza.jp.webp'),
+     ('pizza',44.00,2, '/assets/images/pizza.webp'),
      ('rice',9.00,2, null),
      ('water',4.00,1, '/assets/images/water.webp');
 

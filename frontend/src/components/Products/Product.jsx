@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { useBasket } from '../../context/BasketContext';
 import {formatPercentage, formatPrice} from '../../utils/ContentFormat';
@@ -27,6 +28,13 @@ function Product({product, type}) {
   return (
       
     <Card sx={{ minWidth: 275 }}>
+      <CardMedia
+        component="img"
+        maxHeight="200px"
+        image={product.image ?? '/assets/images/placeholder.png'}
+        alt={product.name}
+        style={{ objectFit: 'contain', width: '100%', height: '200px' }} 
+      />
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {type?.name} - tax: {formatPercentage(type?.tax)}
