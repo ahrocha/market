@@ -9,6 +9,7 @@ CREATE TABLE products (
     name VARCHAR(255),
     price NUMERIC(10, 2),
     type_id INT,
+    image varchar(255) NULL,
     FOREIGN KEY (type_id) REFERENCES types(id)
 );
 
@@ -50,11 +51,11 @@ INSERT INTO public."types" ("name",tax) VALUES
 	 ('food',0.0500);
 
 
-INSERT INTO public.products ("name",price,type_id) VALUES
-	 ('orange juice',17.00,1),
-	 ('pizza',44.00,2),
-	 ('rice',9.00,2),
-	 ('water',4.00,1);
+INSERT INTO public.products ("name",price,type_id,image) VALUES
+	 ('orange juice',17.00,1, '/assets/images/orange_juice.webp'),
+     ('pizza',44.00,2, '/assets/images/pizza.jp.webp'),
+     ('rice',9.00,2, null),
+     ('water',4.00,1, '/assets/images/water.webp');
 
 
 INSERT INTO public.checkouts ("name",email,phone,city,address,zip,state,country,created,total_price,extra_info) VALUES
