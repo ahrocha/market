@@ -29,8 +29,9 @@ class LoginControllerTest extends TestCase
         $this->assertJsonStringEqualsJsonString('{"token":"valid_token"}', $output);
     }
 
-    public function testCreateWithInvalidCredentials()
+    public function testCantCreateWithInvalidCredentials()
     {
+        $this->expectException(Exception::class);
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_SERVER['REQUEST_URI'] = '/login';
         $_POST["email"] = 'admin@admin.com';
@@ -42,11 +43,37 @@ class LoginControllerTest extends TestCase
         $loginServiceMock->method('login')
             ->willReturn(false);
     
-        ob_start();
-        $loginController = new LoginController($loginServiceMock);
-        $loginController->create();
-        $output = ob_get_clean();
+        try {
+            $loginController = new LoginController($loginServiceMock);
+            $loginController->create();
+        } catch (Exception $e) {
+            $this->assertEquals('Invalid credentials', $e->getMessage());
+            $this->assertEquals(401, $e->getCode());
+            throw $e;
+        }
+    }
+
+    public function testCantCreateWithInvalidEmail()
+    {
+        $this->expectException(Exception::class);
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_SERVER['REQUEST_URI'] = '/login';
+        $_POST["email"] = 'invalid-email';
+        $_POST["password"] = '12345';
+
+        $loginServiceMock = $this->getMockBuilder(LoginService::class)
+            ->onlyMethods(['login'])
+            ->getMock();
+        $loginServiceMock->method('login')
+            ->willReturn(false);
     
-        $this->assertJsonStringEqualsJsonString('{"error": "invalid credentials"}', $output);
+        try {
+            $loginController = new LoginController($loginServiceMock);
+            $loginController->create();
+        } catch (Exception $e) {
+            $this->assertEquals('Invalid email', $e->getMessage());
+            $this->assertEquals(400, $e->getCode());
+            throw $e;
+        }
     }
 }

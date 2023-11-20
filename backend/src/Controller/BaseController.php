@@ -32,30 +32,34 @@ class BaseController
 
     public function dispatch()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-            echo '';
-            return;
-        } elseif (($this->requestUri === '/'.$this->serviceName || $this->requestUri === '/'.$this->serviceName.'/') && $_SERVER['REQUEST_METHOD'] === 'GET') {
-            $this->list();
-        } elseif ($this->requestUri === $this->path && $_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->create();
-        } elseif (preg_match('/\/'.$this->serviceName.'\/(\d+)/', $this->requestUri, $matches)) {
-            $this->id = $matches[1];
-            switch ($_SERVER['REQUEST_METHOD']) {
-                case 'GET':
-                    $this->read($this->id);
-                    break;
-                case 'PUT':
-                    $this->update($this->id);
-                    break;
-                case 'DELETE':
-                    $this->delete($this->id);
-                    break;
-                default:
-                    echo 'Not allowed: ' . $_SERVER['REQUEST_METHOD'];
+        try {
+            if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+                echo '';
+                return;
+            } elseif (($this->requestUri === '/'.$this->serviceName || $this->requestUri === '/'.$this->serviceName.'/') && $_SERVER['REQUEST_METHOD'] === 'GET') {
+                $this->list();
+            } elseif ($this->requestUri === $this->path && $_SERVER['REQUEST_METHOD'] === 'POST') {
+                $this->create();
+            } elseif (preg_match('/\/'.$this->serviceName.'\/(\d+)/', $this->requestUri, $matches)) {
+                $this->id = $matches[1];
+                switch ($_SERVER['REQUEST_METHOD']) {
+                    case 'GET':
+                        $this->read($this->id);
+                        break;
+                    case 'PUT':
+                        $this->update($this->id);
+                        break;
+                    case 'DELETE':
+                        $this->delete($this->id);
+                        break;
+                    default:
+                        echo 'Not allowed: ' . $_SERVER['REQUEST_METHOD'];
+                }
+            } else {
+                $this->notFound();
             }
-        } else {
-            $this->notFound();
+        } catch (\Exception $e) {
+            $this->response(['error' => $e->getMessage()], $e->getCode());
         }
     }
 
@@ -118,5 +122,12 @@ class BaseController
             return $postData;
         }
         return json_decode($json, true);
+    }
+
+    public function response($content, $code = 200)
+    {
+        http_response_code($code);
+        header('Content-Type: application/json');
+        echo json_encode($content);
     }
 }
