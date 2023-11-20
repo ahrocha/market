@@ -37,7 +37,7 @@ function Product({product, type}) {
       />
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {type?.name} - tax: {formatPercentage(type?.tax)}
+          {type?.type} - tax: {formatPercentage(type?.tax)}
         </Typography>
         <Typography variant="h5" component="div">
           {product.name}

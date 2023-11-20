@@ -4,31 +4,35 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { login } from '../services/LoginApi';
 import {useBasket} from '../context/BasketContext';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object({
+  email: Yup.string().email('Invalid email format').required('Email is required'),
+  password: Yup.string().required('Password is required'),
+});
 
 function Login() {
     const { setToken } = useBasket();
     const [showForm, setShowForm] = useState(true);
-    const [formData, setFormData] = useState({
-      email: '',
-      password: '',
-    });
-  
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData({ ...formData, [name]: value });
-    };
-  
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        try {
-          const response = await login(formData.email, formData.password);
+
+    const formik = useFormik({
+      initialValues: {
+        email: '',
+        password: '',
+      },
+      validationSchema,
+      onSubmit: (values) => {
+        console.log(values);
+        login(values.email, values.password).then((response) => {
           setToken(response.token);
           setShowForm(false);
-        } catch (error) {
+        }).catch((error) => {
           console.error('Login error', error);
-        }
-      };
+          alert(error.response.data.error);
+        });
+      },
+    });
 
     if (!showForm) {
       return (
@@ -41,15 +45,16 @@ function Login() {
     return (
         <Container>
           {showForm && (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={formik.handleSubmit}>
             <TextField
               label="Email"
               name="email"
               fullWidth
               variant="outlined"
-              value={formData.email}
-              onChange={handleChange}
-              required
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
             />
             <TextField
               label="Password"
@@ -57,9 +62,10 @@ function Login() {
               type="password"
               fullWidth
               variant="outlined"
-              value={formData.password}
-              onChange={handleChange}
-              required
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
             />
             <Button type="submit" variant="contained" color="primary">
               Login

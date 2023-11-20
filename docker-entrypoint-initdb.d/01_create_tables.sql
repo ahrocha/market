@@ -43,7 +43,7 @@ CREATE TABLE sessions (
 
 
 INSERT INTO public.users (email,"password") VALUES
-	 ('admin2@admin.com','$2y$10$m9ov66iNbNgQul7Sy3fJEurjcbr9NCQzkLZauTVaLGrrMTMoKR9om');
+	 ('admin@admin.com','$2y$10$m9ov66iNbNgQul7Sy3fJEurjcbr9NCQzkLZauTVaLGrrMTMoKR9om');
 
 
 INSERT INTO public."types" ("type",tax) VALUES
