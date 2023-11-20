@@ -26,7 +26,6 @@ function Product({product, type}) {
   }
 
   return (
-      
     <Card sx={{ minWidth: 275 }}>
       <CardMedia
         component="img"

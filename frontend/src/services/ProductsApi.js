@@ -1,6 +1,6 @@
-import axios from './axios';
+import axios from 'axios';
 
-const BASE_ENDPOINT = '/products/';
+const BASE_ENDPOINT = process.env.REACT_APP_BASE_URL + '/products/';
 
 const ProductsApi = {
   // Create a new product
