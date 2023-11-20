@@ -32,16 +32,19 @@ class CheckoutsControllerTest extends TestCase
 
     public function testCreateWithInvalidCredentials()
     {
+        $this->expectException(Exception::class);
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_SERVER['REQUEST_URI'] = '/checkouts';
         $_POST["email"] = 'admin@admin.com';
         $_POST["password"] = '54321';
     
-        ob_start();
-        $loginController = new LoginController();
-        $loginController->create();
-        $output = ob_get_clean();
-    
-        $this->assertJsonStringEqualsJsonString('{"error": "invalid credentials"}', $output);
+        try {
+            $loginController = new LoginController();
+            $loginController->create();
+        } catch (Exception $e) {
+            $this->assertEquals('Invalid credentials', $e->getMessage());
+            $this->assertEquals(401, $e->getCode());
+            throw $e;
+        }
     }
 }

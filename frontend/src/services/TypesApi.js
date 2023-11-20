@@ -1,6 +1,6 @@
-import axios from './axios';
+import axios from 'axios';
 
-const BASE_ENDPOINT = '/types/';
+const BASE_ENDPOINT = process.env.REACT_APP_BASE_URL + '/types/';
 
 const TypesApi = {
   // Create a new type
