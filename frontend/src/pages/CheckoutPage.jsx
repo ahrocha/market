@@ -27,8 +27,7 @@ const validationSchema = Yup.object({
 
     const placeOrder = async (values) => {
       try {
-        const response = await CheckoutsApi.createCheckout(values);
-        console.log('response', response);
+        await CheckoutsApi.createCheckout(values);
         clearBasket();
         setShowSuccessMessage(true);
       } catch (error) {
@@ -52,7 +51,6 @@ const validationSchema = Yup.object({
       onSubmit: (values) => {
         values.basketItems = basketItems;
         values.totalPrice = getTotalPrice();
-        console.log(values);
         placeOrder(values);
       },
     });

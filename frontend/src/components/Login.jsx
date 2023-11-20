@@ -15,6 +15,7 @@ const validationSchema = Yup.object({
 function Login() {
     const { setToken } = useBasket();
     const [showForm, setShowForm] = useState(true);
+    const [error, setError] = useState(null);
 
     const formik = useFormik({
       initialValues: {
@@ -23,16 +24,22 @@ function Login() {
       },
       validationSchema,
       onSubmit: (values) => {
-        console.log(values);
         login(values.email, values.password).then((response) => {
           setToken(response.token);
           setShowForm(false);
         }).catch((error) => {
-          console.error('Login error', error);
-          alert(error.response.data.error);
+          setError(error.response.data.error);
         });
       },
     });
+
+    if (error) {
+      return (
+        <Container>
+          <p>{error}</p>
+        </Container>
+      );
+    }
 
     if (!showForm) {
       return (

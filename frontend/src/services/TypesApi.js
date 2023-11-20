@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const BASE_ENDPOINT = process.env.REACT_APP_BASE_URL + '/types/';
 
