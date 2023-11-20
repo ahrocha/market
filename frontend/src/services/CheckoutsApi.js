@@ -1,6 +1,6 @@
-import axios from './axios';
+import axios from 'axios';
 
-const BASE_ENDPOINT = '/checkouts/';
+const BASE_ENDPOINT = process.env.REACT_APP_BASE_URL + '/checkouts/';
 
 const CheckoutsApi = {
 
@@ -15,7 +15,8 @@ const CheckoutsApi = {
     
     getCheckouts: async () => {
         try {
-            const response = await axios.get(BASE_ENDPOINT);
+            const options = {"Authorization": `Token ${localStorage.getItem('token')}`};
+            const response = await axios.get(BASE_ENDPOINT, {headers: options});
             return response.data;
         } catch (error) {
             throw error;
@@ -24,7 +25,8 @@ const CheckoutsApi = {
     
     getCheckoutById: async (checkoutId) => {
         try {
-            const response = await axios.get(`${BASE_ENDPOINT}${checkoutId}`);
+            const options = {"Authorization": `Token ${localStorage.getItem('token')}`};
+            const response = await axios.get(`${BASE_ENDPOINT}${checkoutId}`, {headers: options});
             return response.data;
         } catch (error) {
         throw error;
@@ -33,8 +35,9 @@ const CheckoutsApi = {
     
     updateCheckout: async (checkoutId, checkoutData) => {
         try {
-        const response = await axios.put(`${BASE_ENDPOINT}${checkoutId}`, checkoutData);
-        return response.data;
+            const options = {"Authorization": `Token ${localStorage.getItem('token')}`};
+            const response = await axios.put(`${BASE_ENDPOINT}${checkoutId}`, checkoutData, {headers: options});
+            return response.data;
         } catch (error) {
         throw error;
         }
@@ -42,10 +45,11 @@ const CheckoutsApi = {
     
     deleteCheckout: async (checkoutId) => {
         try {
-            const response = await axios.delete(`${BASE_ENDPOINT}${checkoutId}`);
+            const options = {"Authorization": `Token ${localStorage.getItem('token')}`};
+            const response = await axios.delete(`${BASE_ENDPOINT}${checkoutId}`, {headers: options});
             return response.data;
         } catch (error) {
-            throw error;
+        throw error;
         }
     },
 };
