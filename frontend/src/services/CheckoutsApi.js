@@ -1,8 +1,6 @@
-import axios from 'axios';
+import axios from './axios';
 
-const BASE_ENDPOINT = process.env.REACT_APP_BASE_URL + '/checkouts/';
-
-const options = {"Authorization": `Token ${localStorage.getItem('token')}`};
+const BASE_ENDPOINT = '/checkouts/';
 
 const CheckoutsApi = {
 
@@ -17,7 +15,7 @@ const CheckoutsApi = {
     
     getCheckouts: async () => {
         try {
-            const response = await axios.get(BASE_ENDPOINT, {headers: options});
+            const response = await axios.get(BASE_ENDPOINT);
             return response.data;
         } catch (error) {
             throw error;
@@ -26,7 +24,7 @@ const CheckoutsApi = {
     
     getCheckoutById: async (checkoutId) => {
         try {
-            const response = await axios.get(`${BASE_ENDPOINT}${checkoutId}`, {headers: options});
+            const response = await axios.get(`${BASE_ENDPOINT}${checkoutId}`);
             return response.data;
         } catch (error) {
         throw error;
@@ -35,7 +33,7 @@ const CheckoutsApi = {
     
     updateCheckout: async (checkoutId, checkoutData) => {
         try {
-        const response = await axios.put(`${BASE_ENDPOINT}${checkoutId}`, checkoutData, {headers: options});
+        const response = await axios.put(`${BASE_ENDPOINT}${checkoutId}`, checkoutData);
         return response.data;
         } catch (error) {
         throw error;
@@ -44,10 +42,10 @@ const CheckoutsApi = {
     
     deleteCheckout: async (checkoutId) => {
         try {
-            const response = await axios.delete(`${BASE_ENDPOINT}${checkoutId}`, {headers: options});
+            const response = await axios.delete(`${BASE_ENDPOINT}${checkoutId}`);
             return response.data;
         } catch (error) {
-        throw error;
+            throw error;
         }
     },
 };
